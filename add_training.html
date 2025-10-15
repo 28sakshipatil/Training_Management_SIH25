@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Training Data</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Organization Portal</div>
+    <ul>
+      <li id="add-link"><a href="#" class="active">Add Training</a></li>
+      <li id="central-link"><a href="#">Central Dashboard</a></li>
+      <li id="map-link"><a href="#">Geo Mapping</a></li>
+      <li><a href="notify.html">Alerts</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="form-container">
+    <h2>Add New Training Data</h2>
+    <form id="trainingForm">
+      <label>State Code:</label>
+      <input type="number" name="state_code" required>
+
+      <label>District Code:</label>
+      <input type="number" name="district_code" required>
+
+      <label>Theme:</label>
+      <select name="theme_lvl1" required>
+        <option value="Earthquake">Earthquake</option>
+        <option value="Flood">Flood</option>
+        <option value="Cyclone">Cyclone</option>
+        <option value="Fire">Fire</option>
+      </select>
+
+      <label>Training Type:</label>
+      <select name="training_type" required>
+        <option value="Skill">Skill</option>
+        <option value="Awareness">Awareness</option>
+        <option value="ToT">ToT</option>
+        <option value="Certification">Certification</option>
+      </select>
+
+      <label>Start Date & Time:</label>
+      <input type="datetime-local" name="start_dttm" required>
+
+      <label>End Date & Time:</label>
+      <input type="datetime-local" name="end_dttm" required>
+
+      <label>Total Trainees:</label>
+      <input type="number" name="total_trainees" required>
+
+      <label>Trainees Female:</label>
+      <input type="number" name="trainees_female" required>
+
+      <label>Budget (INR):</label>
+      <input type="number" name="budget_inr" required>
+
+      <button type="submit">Submit</button>
+    </form>
+    <p id="statusMsg"></p>
+  </div>
+
+  <script>
+    // ====== READ ORG FROM URL ======
+    const params = new URLSearchParams(window.location.search);
+    const org = params.get("org");
+
+    const nav = document.querySelector(".navbar ul");
+
+    if (org) {
+      // Central Dashboard
+      const centralLink = document.querySelector('#central-link a');
+      centralLink.href = `../central.html?org=${org}`;
+      centralLink.textContent = 'Central Dashboard';
+
+      // Geo Mapping
+      const mapLink = document.querySelector('#map-link a');
+      mapLink.href = `map.html?org=${org}`;
+      mapLink.textContent = 'Geo Mapping';
+
+      // Add Org Dashboard Link
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = `dashboards/${org}.html`;
+      link.textContent = `${org.toUpperCase()} Dashboard`;
+      li.appendChild(link);
+      nav.insertBefore(li, nav.firstChild);
+
+      // Add Training link (current page)
+      const addLink = document.querySelector('#add-link a');
+      addLink.href = `add_training.html?org=${org}`;
+      addLink.textContent = 'Add Training';
+    }
+
+    // ====== FORM SUBMISSION ======
+    const form = document.getElementById('trainingForm');
+    const statusMsg = document.getElementById('statusMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusMsg.textContent = 'Submitting...';
+
+      // Use FormData to get all input values
+      const fd = new FormData(form);
+      const formData = {
+        org: org ? org.toUpperCase() : "UNKNOWN",
+        state_code: fd.get("state_code"),
+        district_code: fd.get("district_code"),
+        theme_lvl1: fd.get("theme_lvl1"),
+        training_type: fd.get("training_type"),
+        start_dttm: fd.get("start_dttm"),
+        end_dttm: fd.get("end_dttm"),
+        total_trainees: fd.get("total_trainees"),
+        trainees_female: fd.get("trainees_female"),
+        budget_inr: fd.get("budget_inr")
+      };
+
+      try {
+        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzksVNZF-_RRnnNiHHKjJ0GkQESA_CLctv4DEPmAW0hlnJAViCLDxu0yJhKjx3oF6dg/exec";
+
+        const response = await fetch(SHEET_API_URL, {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: { "Content-Type": "application/json" },
+          mode:"cors"
+        });
+
+        if (response.ok) {
+          statusMsg.textContent = '✅ Training added successfully!';
+          form.reset();
+        } else {
+          statusMsg.textContent = '❌ Failed to submit. Try again.';
+        }
+      } catch (error) {
+        console.error(error);
+        statusMsg.textContent = '⚠️ Error submitting the form.';
+      }
+    });
+  </script>
+</body>
+</html>

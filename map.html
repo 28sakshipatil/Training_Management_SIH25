@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geo Mapping</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+ <style>
+        #map {
+            height: 90vh;
+            width: 100%;
+        }
+     
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Geo Mapping</div>
+    <ul>
+        <li id="add-link"><a href="#">Add Training</a></li>
+      <li id="central-link"><a href="#">Central Dashboard</a></li>
+      <li id="map-link"><a href="#" class="active">Geo Mapping</a></li>
+      <li><a href="notify.html">Alerts</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- Map Container -->
+<div id="map"></div>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet MarkerCluster JS -->
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+ <script>
+        // State coordinates
+        const stateCoords = {
+            1: {name: "Andhra Pradesh", lat: 15.9129, lng: 79.74},
+            2: {name: "Arunachal Pradesh", lat: 28.2180, lng: 94.7278},
+            3: {name: "Assam", lat: 26.2006, lng: 92.9376},
+            4: {name: "Bihar", lat: 25.0961, lng: 85.3131},
+            5: {name: "Chhattisgarh", lat: 21.2787, lng: 81.8661},
+            6: {name: "Goa", lat: 15.4140, lng: 74.0240},
+            7: {name: "Gujarat", lat: 22.2587, lng: 71.1924},
+            8: {name: "Haryana", lat: 29.0588, lng: 76.0856},
+            9: {name: "Himachal Pradesh", lat: 31.1048, lng: 77.1734},
+            10: {name: "Jharkhand", lat: 23.6102, lng: 85.2799},
+            11: {name: "Karnataka", lat: 15.3173, lng: 75.7139},
+            12: {name: "Kerala", lat: 10.8505, lng: 76.2711},
+            13: {name: "Madhya Pradesh", lat: 23.4733, lng: 77.9470},
+            14: {name: "Maharashtra", lat: 19.7515, lng: 75.7139},
+            15: {name: "Manipur", lat: 24.6637, lng: 93.9063},
+            16: {name: "Meghalaya", lat: 25.4670, lng: 91.3662},
+            17: {name: "Mizoram", lat: 23.1645, lng: 92.9376},
+            18: {name: "Nagaland", lat: 26.1584, lng: 94.5624},
+            19: {name: "Odisha", lat: 20.9517, lng: 85.0985},
+            20: {name: "Punjab", lat: 31.1471, lng: 75.3412},
+            21: {name: "Rajasthan", lat: 27.0238, lng: 74.2179},
+            22: {name: "Sikkim", lat: 27.5330, lng: 88.5122},
+            23: {name: "Tamil Nadu", lat: 11.1271, lng: 78.6569},
+            24: {name: "Telangana", lat: 18.1124, lng: 79.0193},
+            25: {name: "Tripura", lat: 23.9408, lng: 91.9882},
+            26: {name: "Uttar Pradesh", lat: 26.8467, lng: 80.9462},
+            27: {name: "Uttarakhand", lat: 30.0668, lng: 79.0193},
+            28: {name: "West Bengal", lat: 22.9868, lng: 87.8550},
+            29: {name: "Andaman & Nicobar Islands", lat: 11.7401, lng: 92.6586},
+            30: {name: "Chandigarh", lat: 30.7333, lng: 76.7794},
+            31: {name: "Dadra & Nagar Haveli and Daman & Diu", lat: 20.1809, lng: 73.0169},
+            32: {name: "Delhi", lat: 28.6139, lng: 77.2090},
+            33: {name: "Jammu & Kashmir", lat: 33.7782, lng: 76.5762},
+            34: {name: "Ladakh", lat: 34.1526, lng: 77.5770},
+            35: {name: "Lakshadweep", lat: 10.5626, lng: 72.6369},
+            36: {name: "Puducherry", lat: 11.9416, lng: 79.8083}
+        };
+
+        // Sample 50 trainings (same as before)
+  let trainings = JSON.parse(localStorage.getItem("trainings"));
+
+if (!trainings) {
+  trainings = [];
+  for(let i=1;i<=50;i++){
+      const state_code = Math.floor(Math.random()*36)+1;
+      trainings.push({
+          id:"T"+String(i).padStart(3,"0"),
+          state_code,
+          theme: ["Earthquake","Flood","Cyclone","Fire"][Math.floor(Math.random()*4)],
+          type: ["Skill","Awareness","Certification","ToT"][Math.floor(Math.random()*4)],
+          total: Math.floor(Math.random()*150)+10,
+          partner: ["NGO","SDMA","NIDM","PSU","ATI"][Math.floor(Math.random()*5)]
+      });
+  }
+  localStorage.setItem("trainings", JSON.stringify(trainings));
+}
+
+// Now trainings will be **the same** until localStorage is cleared
+
+
+         // Initialize map
+  const map = L.map("map").setView([23.5937, 80.9629], 5);
+
+  // Tile layer
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors"
+  }).addTo(map);
+
+  // Marker cluster
+  const markerCluster = L.markerClusterGroup();
+  map.addLayer(markerCluster);
+
+  // Add markers
+trainings.forEach(tr => {
+  const state = stateCoords[tr.state_code];
+  if(!state) return; // skip if state not found
+  const marker = L.marker([state.lat, state.lng]);
+  marker.bindPopup(`
+    <b>Training ID:</b> ${tr.id}<br>
+    <b>State:</b> ${state.name}<br>
+    <b>Theme:</b> ${tr.theme}<br>
+    <b>Type:</b> ${tr.type}<br>
+    <b>Total Trainees:</b> ${tr.total}<br>
+    <b>Partner:</b> ${tr.partner}
+  `);
+  markerCluster.addLayer(marker);
+});
+
+</script>
+
+  <script>
+    // Read org from URL
+    const params = new URLSearchParams(window.location.search);
+    const org = params.get("org");
+
+    const nav = document.querySelector(".navbar ul");
+
+    if (org) {
+      // Update Central Dashboard link dynamically
+      const centralLink = document.querySelector('#central-link a');
+      centralLink.href = `../central.html?org=${org}`;
+      centralLink.textContent = 'Central Dashboard';
+
+      // Update Map link dynamically to include org param
+      const mapLink = document.querySelector('#map-link a');
+      mapLink.href = `map.html?org=${org}`;
+      mapLink.textContent = 'Geo Mapping';
+
+      // Add Back to Org Dashboard link at the beginning
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = `dashboards/${org}.html`;
+      link.textContent = `${org.toUpperCase()} Dashboard`;
+      li.appendChild(link);
+      nav.insertBefore(li, nav.firstChild);
+
+      // Add Training (current page)
+      const addLink = document.querySelector('#add-link a');
+      addLink.href = `add_training.html?org=${org}`;
+      addLink.textContent = 'Add Training';
+    }
+
+     
+  </script>
+</body>
+</html>

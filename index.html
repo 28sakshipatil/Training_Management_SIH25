@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organization Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <h2>Organization Login</h2>
+    <form id="loginForm">
+      <label for="org">Select Organization</label>
+      <select id="org" required>
+        <option value="">-- Select --</option>
+        <option value="ngo">NGO</option>
+        <option value="sdma">SDMA</option>
+        <option value="ati">ATI</option>
+        <option value="ndma">NDMA</option>
+        <option value="nidm">NIDM</option>
+        <option value="psu">PSU</option>
+      </select>
+
+      <label for="username">Username</label>
+      <input type="text" id="username" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

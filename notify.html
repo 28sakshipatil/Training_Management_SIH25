@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css">
+  <title>Alerts & Notifications</title>
+  <style>
+    /* * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    } */
+
+    /* body {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      color: #222;
+      padding: 2rem;
+    } */
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      color: #0d47a1;
+      font-size: 2rem;
+      margin-bottom: 0.3rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .alert-container {
+      max-width: 950px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .alert-card {
+      background: #fff;
+      border-left: 6px solid #0d47a1;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 1.2rem 1.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .alert-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .alert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .designation {
+      font-weight: 600;
+      color: #1565c0;
+    }
+
+    .timestamp {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .org {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.3rem;
+    }
+
+    .message {
+      margin-top: 0.8rem;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .badge {
+      background: #1976d2;
+      color: white;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-left: 0.5rem;
+    }
+
+    .critical {
+      border-left-color: #d32f2f;
+    }
+
+    .critical .badge {
+      background: #d32f2f;
+    }
+
+    .moderate {
+      border-left-color: #f9a825;
+    }
+
+    .moderate .badge {
+      background: #f9a825;
+      color: #222;
+    }
+
+    .info {
+      border-left-color: #0288d1;
+    }
+
+    .info .badge {
+      background: #0288d1;
+    }
+
+    @media (max-width: 600px) {
+      .alert-card {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+    <nav class="navbar">
+    <div class="logo">Organization Portal</div>
+    <ul>
+      <li id="add-link"><a href="#" class="active">Add Training</a></li>
+      <li id="central-link"><a href="#">Central Dashboard</a></li>
+      <li id="map-link"><a href="#">Geo Mapping</a></li>
+      <li id="not-link"><a href="#">Alerts</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </nav>
+  <header>
+    <h1> Alerts & Notifications</h1>
+    <p>Real-time updates from NDMA, NIDM, SDMAs, ATIs, NGOs, and PSUs</p>
+  </header>
+
+  <div class="alert-container">
+
+    <!-- NDMA -->
+    <div class="alert-card critical">
+      <div class="alert-header">
+        <span class="designation">Director (NDMA)</span>
+        <span class="badge">Critical Alert</span>
+      </div>
+      <div class="org">National Disaster Management Authority (NDMA)</div>
+      <div class="message">
+        Cyclone “Vayu” expected to make landfall near Gujarat coast. SDMAs and NDRF teams instructed to be on high alert and initiate coastal evacuation drills.
+      </div>
+      <div class="timestamp">⏰ 14 Oct 2025, 10:00 AM</div>
+    </div>
+
+    <!-- NIDM -->
+    <div class="alert-card moderate">
+      <div class="alert-header">
+        <span class="designation">Training Coordinator (NIDM)</span>
+        <span class="badge">Moderate</span>
+      </div>
+      <div class="org">National Institute of Disaster Management (NIDM)</div>
+      <div class="message">
+        National webinar on “Resilient Infrastructure and Preparedness” scheduled for 20 Oct. State ATIs and partner institutions are invited to nominate participants.
+      </div>
+      <div class="timestamp">⏰ 13 Oct 2025, 4:45 PM</div>
+    </div>
+
+    <!-- SDMA -->
+    <div class="alert-card info">
+      <div class="alert-header">
+        <span class="designation">Chief Officer (SDMA Tamil Nadu)</span>
+        <span class="badge">Information</span>
+      </div>
+      <div class="org">State Disaster Management Authority (Tamil Nadu)</div>
+      <div class="message">
+        Mock flood evacuation drill successfully conducted in Chennai region. 850 volunteers trained under the Community Preparedness Program.
+      </div>
+      <div class="timestamp">⏰ 13 Oct 2025, 3:00 PM</div>
+    </div>
+
+    <!-- ATI -->
+    <div class="alert-card moderate">
+      <div class="alert-header">
+        <span class="designation">Director (ATI Bhopal)</span>
+        <span class="badge">Moderate</span>
+      </div>
+      <div class="org">Administrative Training Institute (Madhya Pradesh)</div>
+      <div class="message">
+        New capacity building program on “Crisis Communication and Emergency Response” initiated. Open for district-level officers across the state.
+      </div>
+      <div class="timestamp">⏰ 12 Oct 2025, 1:15 PM</div>
+    </div>
+
+    <!-- NGO -->
+    <div class="alert-card info">
+      <div class="alert-header">
+        <span class="designation">Field Coordinator (SEEDS Foundation)</span>
+        <span class="badge">Information</span>
+      </div>
+      <div class="org">NGO Partner - SEEDS Foundation</div>
+      <div class="message">
+        50 trainers certified under community first-aid and emergency response initiative in Assam. Report submitted to SDMA Assam for validation.
+      </div>
+      <div class="timestamp">⏰ 11 Oct 2025, 6:30 PM</div>
+    </div>
+
+    <!-- PSU -->
+    <div class="alert-card critical">
+      <div class="alert-header">
+        <span class="designation">CSR Head (NTPC)</span>
+        <span class="badge">Critical Alert</span>
+      </div>
+      <div class="org">Public Sector Unit - NTPC Limited</div>
+      <div class="message">
+        NTPC Angul unit reports flash flood risk in nearby settlements due to heavy rainfall. CSR and safety teams coordinating with SDMA Odisha.
+      </div>
+      <div class="timestamp">⏰ 10 Oct 2025, 9:00 AM</div>
+    </div>
+
+  </div>
+  <script>
+    // Read org from URL
+    const params = new URLSearchParams(window.location.search);
+    const org = params.get("org");
+
+    const nav = document.querySelector(".navbar ul");
+
+    if (org) {
+      // Update Central Dashboard link dynamically
+      const centralLink = document.querySelector('#central-link a');
+      centralLink.href = `../central.html?org=${org}`;
+      centralLink.textContent = 'Central Dashboard';
+
+      // Update Map link dynamically to include org param
+      const mapLink = document.querySelector('#map-link a');
+      mapLink.href = `map.html?org=${org}`;
+      mapLink.textContent = 'Geo Mapping';
+
+      const notLink = document.querySelector('#not-link a');
+      notLink.href = `notify.html?org=${org}`;
+      notLink.textContent = 'Alerts';
+
+
+      // Add Back to Org Dashboard link at the beginning
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = `dashboards/${org}.html`;
+      link.textContent = `${org.toUpperCase()} Dashboard`;
+      li.appendChild(link);
+      nav.insertBefore(li, nav.firstChild);
+      
+        // Add Training (current page)
+      const addLink = document.querySelector('#add-link a');
+      addLink.href = `add_training.html?org=${org}`;
+      addLink.textContent = 'Add Training';
+    }
+
+   
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Central Dashboard</div>
+    <ul>
+    <li id="add-link"><a href="#">Add Training</a></li>
+      <li id="central-link"><a href="#" class="active">Central Dashboard</a></li>
+      <li id="map-link"><a href="#" >Geo Mapping</a></li>
+      <li><a href="notify.html">Alerts</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="iframe-container">
+    <iframe 
+      src="https://lookerstudio.google.com/embed/reporting/a50278d9-4757-401a-9baa-984075d26a8e/page/LYXbF" 
+      frameborder="0" 
+      allowfullscreen
+      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+    </iframe>
+  </div>
+  <!-- <div class="dashboard">
+    <h1>Central Dashboard</h1> -->
+    <!-- <div class="card">
+      <h3>Summary of All Organizations</h3>
+      <p>NGO: 12 projects | SDMA: 8 missions | ATI: 5 trainings | NDMI: 10 models | NIDM: 6 policies | PSU: 14 operations</p>
+    </div>
+    <div class="card">
+      <h3>Visualization Placeholder</h3>
+      <p>(Here you can add charts or combined analytics)</p>
+    </div> -->
+    
+  <!-- </div> -->
+ <script>
+    // Read org from URL
+    const params = new URLSearchParams(window.location.search);
+    const org = params.get("org");
+
+    const nav = document.querySelector(".navbar ul");
+
+    if (org) {
+      // Update Central Dashboard link dynamically
+      const centralLink = document.querySelector('#central-link a');
+      centralLink.href = `../central.html?org=${org}`;
+      centralLink.textContent = 'Central Dashboard';
+
+      // Update Map link dynamically to include org param
+      const mapLink = document.querySelector('#map-link a');
+      mapLink.href = `map.html?org=${org}`;
+      mapLink.textContent = 'Geo Mapping';
+
+      // Add Back to Org Dashboard link at the beginning
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = `dashboards/${org}.html`;
+      link.textContent = `${org.toUpperCase()} Dashboard`;
+      li.appendChild(link);
+      nav.insertBefore(li, nav.firstChild);
+      
+        // Add Training (current page)
+      const addLink = document.querySelector('#add-link a');
+      addLink.href = `add_training.html?org=${org}`;
+      addLink.textContent = 'Add Training';
+    }
+
+   
+  </script>
+
+</body>
+</html>
